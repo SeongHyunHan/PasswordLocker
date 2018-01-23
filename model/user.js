@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
@@ -33,7 +32,7 @@ UserSchema.methods.toJSON = function() {
     var user = this;
     var userObject = user.toObject();
 
-    return _.pick(userObejct, ['_id', 'userId']);
+    return _.pick(userObject, ['_id', 'userId']);
 };
 
 UserSchema.methods.generateAuthToken = function () {
@@ -77,7 +76,7 @@ UserSchema.pre('save',function (next) {
     }else{
       next();
     }
-  });
+});
 
 var User = mongoose.model('User', UserSchema);
 
