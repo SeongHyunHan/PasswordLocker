@@ -49,6 +49,7 @@ app.post('/sites', (req, res) => {
     });
 });
 
+// Get All Site ID and Password under same userID
 app.get('/sites/getAll', authenticate, (req, res) => {
     Site.find({userID: req.user._id}).then((sites) => {
         for(i = 0; i < sites.length; i++){
@@ -65,7 +66,17 @@ app.get('/sites/getAll', authenticate, (req, res) => {
     }).catch ((e) => res.status(400).send(e));
 });
 
-app.get('/sites/getOne', authenticate, (req, res) => {
+// Login
+app.post('/users/login', (req, res) => {
+    var body = _.pick(req.body, ['userId', 'password']);
+
+    User.findByCredentials(body.email, body.password).then((user) => {
+        return user.generateAuthToken().then((token) => {
+            res.header('x-auth', token).send(user);
+        });
+    }).catch((e) => {
+        res.status(400).send();
+    });
 });
 
 app.listen(port, () => {
