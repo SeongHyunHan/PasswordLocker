@@ -7,6 +7,10 @@ const passport = require('passport');
 
 const keys = require('./config/keys');
 const authRoutes = require('./routes/auth-routes');
+const mainRoutes = require('./routes/main-routes');
+const passportConfig = require('./config/passport');
+const db = require('./config/dbConfig');
+const User = require('./model/user');
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -32,7 +36,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //middlewares
-app.get('/auth', authRoutes);
+app.use('/auth', authRoutes);
+app.use('/main', mainRoutes);
 
 //home route
 app.get('/', (req, res) => {

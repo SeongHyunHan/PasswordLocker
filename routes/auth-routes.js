@@ -1,22 +1,23 @@
 const passport = require('passport');
+const router = require('express').Router();
 
 // auth with google
-app.get('/google', passport.authenticate('google', {
+router.get('/google', passport.authenticate('google', {
     scope: ['profile']
 }));
 
 // callback route for google to redirect to
-app.get('/google/redirect', passport.authenticate('google'), (req, res) => {
+router.get('/google/redirect', passport.authenticate('google', { failureRedirect: '/'}), (req, res) => {
     //res.send(req.user);
-    res.redirect('/profile')
+    res.redirect('/main')
 });
 
 // auth with facebook
-app.get('/facebook', passport.authenticate('facebook'));
+router.get('/facebook', passport.authenticate('facebook'));
 
 // callback route for facebook to redirect to
-app.get('/facebook/redirect', passport.authenticate('facebook', {failureRedirect: '/login'}), (req, res) => {
-    res.redirect('/');
+router.get('/facebook/redirect', passport.authenticate('facebook', {failureRedirect: '/'}), (req, res) => {
+    res.redirect('/main');
 });
 
 
