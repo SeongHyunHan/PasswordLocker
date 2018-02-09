@@ -8,9 +8,12 @@ const passport = require('passport');
 const keys = require('./config/keys');
 const authRoutes = require('./routes/auth-routes');
 const mainRoutes = require('./routes/main-routes');
+const redirectRoutes = require('./routes/redirect-routes');
+const crudRoutes = require('./routes/crud-routes');
 const passportConfig = require('./config/passport');
 const db = require('./config/dbConfig');
 const User = require('./model/user');
+const Site = require('./model/site');
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -36,8 +39,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //middlewares
+app.use('/', redirectRoutes);
 app.use('/auth', authRoutes);
 app.use('/main', mainRoutes);
+app.use('/crud', crudRoutes);
 
 //home route
 app.get('/', (req, res) => {

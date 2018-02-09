@@ -7,6 +7,18 @@
     <title>Document</title>
 </head>
 <body>
-    <p>This is Main page</p>
+    <p>Welcome <%= user.dataValues.username %></p>
+
+    <form>
+        <% if(site.length == 0) { %>
+        <a href="/newSite">Add New Sites</a>
+        <% } else{ 
+            console.log(site);%>
+            <p>HI</p>
+        <% } %>
+        <table>
+                
+        </table>
+    </form>
 </body>
 </html>

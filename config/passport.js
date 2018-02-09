@@ -11,8 +11,8 @@ passport.serializeUser((user, done) => {
     done(null, user.id);
 });
 
-passport.deserializeUser((id, done) => {
-    User.findAll({where: {authId: id.toString()}}).then((user) => {
+passport.deserializeUser((identification, done) => {
+    User.findOne({where: {id: identification}}).then((user) => {
         done(null, user);
     });
 });
