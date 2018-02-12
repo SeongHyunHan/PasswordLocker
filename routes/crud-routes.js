@@ -1,76 +1,83 @@
 const router = require('express').Router();
 
+const url = require('url');
+
 const User = require('../model/user');
 const Site = require('../model/site');
 
-router.post('/', (req, res) => {
-    const method = req.body._method;
-
+router.post('/', (req, res, next) => {
+    const method = req.body.method;
     switch(method){
         case 'post':
-            res.redirect('/write');
-            break;
-        case 'get':
-            res.redirect('/read');
+            const userId = req.user.dataValues.id;
+            const siteURL = req.body.siteURL;
+            const siteId = req.body.siteId;
+            const password = req.body.password;
+            Site.findOne({
+                where: {
+                    userId,
+                    siteURL,
+                    siteId
+                }
+            }).then((site) => {
+                if(!site){
+                    Site.create({
+                        siteURL: req.body.siteURL,
+                        siteId: req.body.siteId,
+                        password: req.body.password,
+                        userId: req.user.dataValues.id
+                    }).then((site) => {
+                        res.redirect(url.format({
+                            pathname: '/home',
+                            query: {
+                                result: 1
+                            }
+                        }));
+                    });        
+                }else{
+                    res.redirect(url.format({
+                        pathname: '/home',
+                        query: {
+                            result: 2
+                        }
+                    }));
+                }
+            })
+            
             break;
         case 'patch':
-            res.redirect('/update');
+            Site.update({
+                siteURL: req.body.siteURL,
+                siteId: req.body.siteId,
+                password: req.body.password
+            },{
+                where: {
+                    id: req.body.id
+                }
+            }).then((result) => {
+                res.redirect(url.format({
+                    pathname: '/home',
+                    query: {
+                        result: 3
+                    }
+                }));
+            });
             break;
         case 'delete':
-            res.redirect('/delete');
+            Site.destroy({
+                where: {
+                    id: req.body.id
+                }
+            }).then((result) => {
+                console.log(result);
+            });
             break;
     }
 });
 
-router.post('/write', (req, res) => {
-    Site.create({
-        siteURL: req.body.siteURL,
-        siteId: req.body.siteId,
-        password: req.body.password,
-        userId: req.user.id
-    }).then((user) => {
-        console.log({user});
-        res.render('main', {
-            user
-        });
-    });
-});
-
-router.patch('/update', (req, res) => {
-    Site.update({
-        siteURL: req.body.siteURL,
-        siteId: req.body.siteId,
-        password: req.body.password
-    },{
-        where: {
-            id: req.body.id
-        }
-    }).then((result) => {
-        console.log(result);
-    })
-});
-
-router.get('/read', (req, res) => {
-    Site.findById(req.query.id)
-    .then((site) => {
-        console.log(site);
-    });
-});
-
-router.delete('/remove', (req, res) => {
-    Site.destroy({
-        where: {
-            id: req.body.id
-        }
-    }).then((result) => {
-        console.log(result);
-    })
-});
-
 router.get('/showAll', (req, res) => {
-    console.log("Came Here");
     Site.findAll({
-        where: {id: req.user.id}
+        where: {userId: req.user.id}
     }).then((sites) => {
         res.render('main', {
             user : req.user,

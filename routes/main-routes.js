@@ -17,6 +17,4 @@ router.get('/', authCheck, (req, res) => {
     });
 });
 
-
-
 module.exports = router;
