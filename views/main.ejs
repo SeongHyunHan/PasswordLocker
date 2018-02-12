@@ -6,16 +6,27 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
-<body>
+<body>    
     <p>Welcome <%= user.dataValues.username %></p>
 
     <form>
-        <% if(site.length == 0) { %>
+        <% if(sites.length == 0) { %>
         <a href="/newSite">Add New Sites</a>
-        <% } else{ 
-            console.log(site);%>
-            <p>HI</p>
-        <% } %>
+        <% } else{ %>
+            <table> 
+                <% sites.forEach((site) => {  %>
+                <tr>
+                    <td><%= site.dataValues.siteURL %></td>
+                    <td><%= site.dataValues.siteId %></td>
+                    <td><%= site.dataValues.password %></td>
+                    <td><a href="/editSite?id=<%= site.dataValues.id %>">Update</a></td>
+                    <td><a href="/removeSite?id=<%= site.dataValues.id %>">Delete</a></td>
+                </tr>
+                <% }) %>
+            </table>
+
+            <a href="/newSite">Add New Sites</a>
+        <%} %>
         <table>
                 
         </table>
