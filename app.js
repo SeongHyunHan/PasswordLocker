@@ -21,7 +21,10 @@ const app = express();
 const server = http.createServer(app);
 
 //set up body-parser
-app.set(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
 
 //set up view engine
 app.set('view engine', 'ejs');
