@@ -30,7 +30,8 @@ passport.use(new GoogleStrategy({
        }else{
             User.create({
                 username: profile.displayName,
-                authId: profile.id
+                authId: profile.id,
+                auth: 'Google+'
             }).then((newUser) => {
                 console.log(`new user created ${newUser}`);
                 done(null, newUser);
@@ -50,7 +51,8 @@ passport.use(new FacebookStrategy({
         }else{
             User.create({
                 username: profile.displayName,
-                authId: profile.id
+                authId: profile.id,
+                auth: 'Facebook'
             }).then((newUser) => {
                 console.log(`new user created ${newUser}`);
                 done(null, newUser);
