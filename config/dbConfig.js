@@ -1,16 +1,12 @@
 const Sequelize = require('sequelize');
 const User = require('../model/user');
 
-const database = 'seong';
-const username = 'postgres';
-const password = 'syjs7193';
-const port = '5432';
-const host = 'localhost';
+const { db } = require('../config/keys');
 
-const sequelize = new Sequelize(database, username, password, {
+const sequelize = new Sequelize(db.database, db.username, db.password, {
     logging: false,
-    host,
-    port,
+    host: db.host,
+    port: db.port,
     dialect: 'postgres'
 });
 
