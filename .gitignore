@@ -3,6 +3,3 @@ node_modules/
 
 #config
 config/keys.js
-
-#eslint config
-.eslintrc.js
