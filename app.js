@@ -7,7 +7,7 @@ const passport = require('passport');
 
 const keys = require('./config/keys');
 const authRoutes = require('./routes/auth-routes');
-const mainRoutes = require('./routes/main-routes');
+const homeRoutes = require('./routes/home-routes');
 const redirectRoutes = require('./routes/redirect-routes');
 const crudRoutes = require('./routes/crud-routes');
 const passportConfig = require('./config/passport');
@@ -44,12 +44,12 @@ app.use(passport.session());
 //middlewares
 app.use('/', redirectRoutes);
 app.use('/auth', authRoutes);
-app.use('/main', mainRoutes);
+app.use('/home', homeRoutes);
 app.use('/crud', crudRoutes);
 
 //home route
 app.get('/', (req, res) => {
-    res.render('home');
+    res.render('index');
 });
 
 server.listen(port, () => {

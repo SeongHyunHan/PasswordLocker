@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <form method="post" action="/auth/local">
+            <table>
+                <tr>
+                    <td><label for="username">User Name: </label></td>
+                    <td><input type="text" id="username" name="username"></td>
+                </tr>
+                <tr>
+                    <td><lable for="pw">Password: </lable></td>
+                    <td><input type="password" id="pw" name="password"></td>
+                </tr>
+            </table>
+            <button type="submit" name="">Sign In</button>
+        </form>
+        <a href="/signup"><button>Sign Up</button></a>
+    </div>
+    <div>
+        <a href="/auth/google"><button>Sign in with Google+</button></a>
+        <a href="/auth/facebook"><button>Sign in with Facebook</button></a>
+    </div>
+</body>
+</html>
