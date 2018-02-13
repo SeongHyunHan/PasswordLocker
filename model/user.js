@@ -8,10 +8,20 @@ const User = db.define('user', {
         autoIncrement: true
     },
     username: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    password: {
+        type: Sequelize.STRING,
+        allowNull: true
+    },
+    auth: {
+        type: Sequelize.STRING,
+        allowNull: false
     },
     authId: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: true
     }
 },{
     timestamps: false
