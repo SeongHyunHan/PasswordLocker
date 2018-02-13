@@ -9,5 +9,12 @@ module.exports = {
     },
     session: {
         key: 'PasswordLocker'
+    },
+    db : {
+        database : 'seong',
+        username : 'postgres',
+        password : 'syjs7193',
+        port : '5432',
+        host : 'localhost'
     }
 }
