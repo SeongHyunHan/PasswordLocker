@@ -79,7 +79,7 @@ router.get('/showAll', (req, res) => {
     Site.findAll({
         where: {userId: req.user.id}
     }).then((sites) => {
-        res.render('main', {
+        res.render('home', {
             user : req.user,
             site : sites
         });

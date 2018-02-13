@@ -43,12 +43,16 @@ router.get('/home', (req, res) => {
     Site.findAll({
         where: {userId: req.user.id}
     }).then((sites) => {
-        res.render('main', {
+        res.render('home', {
             user : req.user,
             sites,
             message,
         });
     });
+});
+
+router.get('/signup', (req, res) => {
+    res.render('signup');
 });
 
 module.exports = router;
