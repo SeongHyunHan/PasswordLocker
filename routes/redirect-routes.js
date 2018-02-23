@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const User = require('../model/user');
 const Site = require('../model/site');
+const { decrypt } = require('./functions/crypto');
 
 router.get('/newSite', (req, res) => {
     res.render('add');
@@ -15,12 +16,23 @@ router.get('/editSite', (req, res) => {
             id,
             site
         });
-    });
-    
+    });  
 });
 
 router.get('/removeSite', (req, res) => {
-    res.render('remove');
+    const id = req.query.id;
+    Site.destroy({
+        where: {
+            id
+        }
+    }).then((result) => {
+        res.redirect(url.format({
+            pathname: '/home',
+            query: {
+                result: 1
+            }
+        }));
+    });
 });
 
 router.get('/home', (req, res) => {

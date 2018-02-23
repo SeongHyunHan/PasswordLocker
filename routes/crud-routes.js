@@ -4,6 +4,7 @@ const url = require('url');
 
 const User = require('../model/user');
 const Site = require('../model/site');
+const Crypto = require('./functions/crypto');
 
 router.post('/', (req, res, next) => {
     const method = req.body.method;
@@ -12,7 +13,7 @@ router.post('/', (req, res, next) => {
             const userId = req.user.dataValues.id;
             const siteURL = req.body.siteURL;
             const siteId = req.body.siteId;
-            const password = req.body.password;
+            const password = Crypto.encrypt(req.body.password);
             Site.findOne({
                 where: {
                     userId,
@@ -22,10 +23,10 @@ router.post('/', (req, res, next) => {
             }).then((site) => {
                 if(!site){
                     Site.create({
-                        siteURL: req.body.siteURL,
-                        siteId: req.body.siteId,
-                        password: req.body.password,
-                        userId: req.user.dataValues.id
+                        siteURL,
+                        siteId,
+                        password,
+                        userId
                     }).then((site) => {
                         res.redirect(url.format({
                             pathname: '/home',
@@ -49,7 +50,7 @@ router.post('/', (req, res, next) => {
             Site.update({
                 siteURL: req.body.siteURL,
                 siteId: req.body.siteId,
-                password: req.body.password
+                password: Crypto.encrypt(req.body.password)
             },{
                 where: {
                     id: req.body.id
@@ -61,15 +62,6 @@ router.post('/', (req, res, next) => {
                         result: 3
                     }
                 }));
-            });
-            break;
-        case 'delete':
-            Site.destroy({
-                where: {
-                    id: req.body.id
-                }
-            }).then((result) => {
-                console.log(result);
             });
             break;
     }
