@@ -34,7 +34,7 @@ router.post('/', (req, res, next) => {
                                 result: 1
                             }
                         }));
-                    });        
+                    });        +
                 }else{
                     res.redirect(url.format({
                         pathname: '/home',
