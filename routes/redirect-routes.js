@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const url = require('url');
 
 const User = require('../model/user');
 const Site = require('../model/site');
@@ -55,6 +56,11 @@ router.get('/home', (req, res) => {
     Site.findAll({
         where: {userId: req.user.id}
     }).then((sites) => {
+        if(sites.length >= 1){
+            sites.forEach((site) => {
+                site.password = decrypt(site.password);
+            });
+        }
         res.render('home', {
             user : req.user,
             sites,
